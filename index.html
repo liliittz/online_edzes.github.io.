@@ -15,7 +15,6 @@ body {
   text-align:center;
 }
 
-/* --- Menü --- */
 nav {
   position:sticky;
   top:0;
@@ -25,15 +24,9 @@ nav {
   box-shadow:0 2px 8px rgba(0,0,0,0.5);
 }
 
-nav .menu {
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:15px;
-}
-
 nav a {
   color:#27ae60;
+  margin:0 15px;
   text-decoration:none;
   font-weight:600;
   transition:0.3s;
@@ -49,8 +42,8 @@ header {
   box-shadow:0 4px 20px rgba(39,174,96,0.5);
 }
 
-header h1 { color:#27ae60; margin-bottom:0.5em; font-size:1.8rem; }
-header p { margin:0.3em 0; font-size:1rem; }
+header h1 { color:#27ae60; margin-bottom:0.5em; }
+header p { margin:0.3em 0; font-size:1.1rem; }
 
 section {
   max-width:900px;
@@ -63,7 +56,6 @@ section {
 
 h2 { color:#27ae60; margin-bottom:15px; }
 
-/* --- Részletek --- */
 .detail-item {
   border:1px solid #27ae60;
   border-radius:12px;
@@ -112,7 +104,6 @@ h2 { color:#27ae60; margin-bottom:15px; }
   padding:10px 15px;
 }
 
-/* --- Szolgáltatások --- */
 .services {
   display:flex;
   flex-wrap:wrap;
@@ -121,8 +112,8 @@ h2 { color:#27ae60; margin-bottom:15px; }
 }
 
 .service-card {
-  flex:1 1 220px;
-  max-width:220px;
+  display:block;
+  width:220px;
   background:#1f1f1f;
   padding:20px;
   border-radius:15px;
@@ -139,48 +130,6 @@ h2 { color:#27ae60; margin-bottom:15px; }
 
 .service-card h3, .service-card p { margin:5px 0; }
 
-/* --- Táblázat --- */
-.discount-table-wrapper {
-  overflow-x:auto;
-}
-
-.discount-table {
-  width:100%;
-  border-collapse:collapse;
-  margin-top:20px;
-  text-align:center;
-  min-width:500px; /* hogy görgethető legyen mobilon */
-}
-
-.discount-table th, .discount-table td {
-  border:1px solid #27ae60;
-  padding:8px 10px;
-  white-space:nowrap;
-}
-
-.discount-table th {
-  background:#27ae60;
-  color:#121212;
-}
-
-.discount-table td {
-  background:#1b1b1b;
-  font-weight:500;
-}
-
-.discount-table td.discount-price {
-  color:#27ae60;
-  font-weight:700;
-  font-size:1.1rem;
-}
-
-.discount-table tr:hover td {
-  background:#2a2a2a;
-}
-
-.small-text { font-size:0.85rem; }
-
-/* --- Kapcsolat --- */
 .contact a {
   display:inline-block;
   margin:10px;
@@ -193,17 +142,46 @@ h2 { color:#27ae60; margin-bottom:15px; }
 
 footer { text-align:center; margin:20px; color:#27ae60; font-weight:600; font-size:0.9rem; }
 
-html {
-  scroll-behavior: smooth;
+.discount-table {
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+  text-align:center;
+  table-layout: fixed;
+  font-size:1rem; /* kicsit nagyobb alapméret */
 }
 
-/* --- Mobil reszponzív --- */
-@media (max-width:600px) {
-  nav .menu { flex-direction:column; gap:10px; }
-  header h1 { font-size:1.4rem; }
-  header p { font-size:0.9rem; }
-  .service-card { flex:1 1 100%; max-width:100%; }
-  .discount-table { font-size:0.9rem; }
+.discount-table th, .discount-table td {
+  border:1px solid #27ae60;
+  padding:10px 12px;
+  word-wrap: break-word;
+}
+
+.discount-table th {
+  background:#27ae60;
+  color:#121212;
+  font-size:1.05rem;
+}
+
+.discount-table td {
+  background:#1b1b1b;
+  font-weight:500; /* kicsit vastagabb a többi cella */
+}
+
+.discount-table td.discount-price {
+  color:#27ae60;
+  font-weight:700;
+  font-size:1.2rem; /* kiemelt ár */
+}
+
+.discount-table tr:hover td {
+  background:#2a2a2a;
+}
+
+.small-text { font-size:0.85rem; }
+
+html {
+  scroll-behavior: smooth;
 }
 </style>
 </head>
@@ -211,13 +189,11 @@ html {
 
 <!-- Menü -->
 <nav>
-  <div class="menu">
-    <a href="#bemutatkozas">Bemutatkozás</a>
-    <a href="#frissites">Frissítés</a>
-    <a href="#services">Szolgáltatások</a>
-    <a href="#discounts">Kedvezmények</a>
-    <a href="#contact">Kapcsolat</a>
-  </div>
+  <a href="#bemutatkozas">Bemutatkozás</a>
+  <a href="#frissites">Frissítés</a>
+  <a href="#services">Szolgáltatások</a>
+  <a href="#discounts">Kedvezmények</a>
+  <a href="#contact">Kapcsolat</a>
 </nav>
 
 <!-- Bemutatkozás -->
@@ -335,49 +311,47 @@ html {
 <!-- Kedvezmények -->
 <section id="discounts">
   <h2>Kedvezmények</h2>
-  <div class="discount-table-wrapper">
-    <table class="discount-table">
-      <thead>
-        <tr>
-          <th>Edzéstervek száma/hét</th>
-          <th>Hónapban összes edzés</th>
-          <th>Alap ár (Ft)</th>
-          <th>Kedvezmény (%)</th>
-          <th>Kedvezményes ár (Ft)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>4 napos</td>
-          <td class="small-text">16</td>
-          <td>32 000</td>
-          <td class="small-text">10%</td>
-          <td class="discount-price">28 800</td>
-        </tr>
-        <tr>
-          <td>5 napos</td>
-          <td class="small-text">20</td>
-          <td>40 000</td>
-          <td class="small-text">15%</td>
-          <td class="discount-price">34 000</td>
-        </tr>
-        <tr>
-          <td>8 hetes csomag (3 nap/hét)</td>
-          <td class="small-text">24</td>
-          <td>48 000</td>
-          <td class="small-text">15%</td>
-          <td class="discount-price">40 800</td>
-        </tr>
-        <tr>
-          <td>12 hetes csomag (3 nap/hét)</td>
-          <td class="small-text">36</td>
-          <td>72 000</td>
-          <td class="small-text">20%</td>
-          <td class="discount-price">57 600</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table class="discount-table">
+    <thead>
+      <tr>
+        <th>Edzéstervek száma/hét</th>
+        <th>Hónapban összes edzés</th>
+        <th>Alap ár (Ft)</th>
+        <th>Kedvezmény (%)</th>
+        <th>Kedvezményes ár (Ft)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>4 napos</td>
+        <td class="small-text">16</td>
+        <td>32 000</td>
+        <td class="small-text">10%</td>
+        <td class="discount-price">28 800</td>
+      </tr>
+      <tr>
+        <td>5 napos</td>
+        <td class="small-text">20</td>
+        <td>40 000</td>
+        <td class="small-text">15%</td>
+        <td class="discount-price">34 000</td>
+      </tr>
+      <tr>
+        <td>8 hetes csomag (3 nap/hét)</td>
+        <td class="small-text">24</td>
+        <td>48 000</td>
+        <td class="small-text">15%</td>
+        <td class="discount-price">40 800</td>
+      </tr>
+      <tr>
+        <td>12 hetes csomag (3 nap/hét)</td>
+        <td class="small-text">36</td>
+        <td>72 000</td>
+        <td class="small-text">20%</td>
+        <td class="discount-price">57 600</td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <!-- Kapcsolat -->
