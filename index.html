@@ -15,18 +15,32 @@ body {
   text-align:center;
 }
 
+/* ===== NAVBAR ===== */
 nav {
   position:sticky;
   top:0;
   background:#1b1b1b;
-  padding:10px 0;
+  padding:10px 15px;
   z-index:100;
   box-shadow:0 2px 8px rgba(0,0,0,0.5);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+nav .logo {
+  color:#27ae60;
+  font-weight:700;
+  font-size:1.2rem;
+}
+
+nav .menu {
+  display:flex;
+  gap:15px;
 }
 
 nav a {
   color:#27ae60;
-  margin:0 15px;
   text-decoration:none;
   font-weight:600;
   transition:0.3s;
@@ -34,6 +48,23 @@ nav a {
 
 nav a:hover { color:#a3e6a3; }
 
+/* Hamburger ikon */
+nav .hamburger {
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  cursor:pointer;
+}
+
+nav .hamburger span {
+  display:block;
+  width:25px;
+  height:3px;
+  background:#27ae60;
+  border-radius:2px;
+}
+
+/* ===== HEADER ===== */
 header {
   padding:30px;
   background: linear-gradient(135deg,#1b1b1b,#2a2a2a);
@@ -45,6 +76,7 @@ header {
 header h1 { color:#27ae60; margin-bottom:0.5em; }
 header p { margin:0.3em 0; font-size:1.1rem; }
 
+/* ===== SECTION ===== */
 section {
   max-width:900px;
   margin:30px auto;
@@ -56,6 +88,7 @@ section {
 
 h2 { color:#27ae60; margin-bottom:15px; }
 
+/* ===== DETAIL TOGGLE ===== */
 .detail-item {
   border:1px solid #27ae60;
   border-radius:12px;
@@ -104,6 +137,7 @@ h2 { color:#27ae60; margin-bottom:15px; }
   padding:10px 15px;
 }
 
+/* ===== SERVICES ===== */
 .services {
   display:flex;
   flex-wrap:wrap;
@@ -130,6 +164,7 @@ h2 { color:#27ae60; margin-bottom:15px; }
 
 .service-card h3, .service-card p { margin:5px 0; }
 
+/* ===== CONTACT ===== */
 .contact a {
   display:inline-block;
   margin:10px;
@@ -142,46 +177,51 @@ h2 { color:#27ae60; margin-bottom:15px; }
 
 footer { text-align:center; margin:20px; color:#27ae60; font-weight:600; font-size:0.9rem; }
 
+/* ===== DISCOUNT TABLE ===== */
+.discount-table-container {
+  overflow-x:auto; /* scroll sáv mobilon */
+}
+
 .discount-table {
-  width:100%;
+  min-width:600px; /* így mobilon vízszintesen scrollozható */
   border-collapse:collapse;
   margin-top:20px;
   text-align:center;
-  table-layout: fixed;
-  font-size:1rem; /* kicsit nagyobb alapméret */
+  font-size:0.95rem;
 }
 
 .discount-table th, .discount-table td {
   border:1px solid #27ae60;
-  padding:10px 12px;
-  word-wrap: break-word;
+  padding:8px 10px;
+  white-space:nowrap;
 }
 
 .discount-table th {
   background:#27ae60;
   color:#121212;
-  font-size:1.05rem;
+  font-size:1rem;
 }
 
-.discount-table td {
-  background:#1b1b1b;
-  font-weight:500; /* kicsit vastagabb a többi cella */
-}
-
-.discount-table td.discount-price {
-  color:#27ae60;
-  font-weight:700;
-  font-size:1.2rem; /* kiemelt ár */
-}
-
-.discount-table tr:hover td {
-  background:#2a2a2a;
-}
-
+.discount-table td { background:#1b1b1b; }
+.discount-table tr:hover td { background:#2a2a2a; }
 .small-text { font-size:0.85rem; }
 
-html {
-  scroll-behavior: smooth;
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  nav .menu {
+    display:none;
+    flex-direction:column;
+    background:#1b1b1b;
+    position:absolute;
+    top:50px;
+    right:15px;
+    padding:10px;
+    border-radius:8px;
+  }
+  nav .menu.show { display:flex; }
+  nav .hamburger { display:flex; }
+  .services { flex-direction:column; align-items:center; }
+  .service-card { width:90%; }
 }
 </style>
 </head>
@@ -189,121 +229,57 @@ html {
 
 <!-- Menü -->
 <nav>
-  <a href="#bemutatkozas">Bemutatkozás</a>
-  <a href="#frissites">Frissítés</a>
-  <a href="#services">Szolgáltatások</a>
-  <a href="#discounts">Kedvezmények</a>
-  <a href="#contact">Kapcsolat</a>
+  <div class="logo">LiliFit</div>
+  <div class="menu">
+    <a href="#bemutatkozas">Bemutatkozás</a>
+    <a href="#frissites">Frissítés</a>
+    <a href="#services">Szolgáltatások</a>
+    <a href="#discounts">Kedvezmények</a>
+    <a href="#contact">Kapcsolat</a>
+  </div>
+  <div class="hamburger">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
 
 <!-- Bemutatkozás -->
 <section id="bemutatkozas">
   <header>
     <h1>Ittzés Lili - Sportoktató</h1>
-    <p>A sport mindig is fontos része volt az életemnek: hosszú évekig ritmikus gimnasztikáztam és kajakoztam versenyszerűen.</p>
-    <p>A mozgás számomra mindig is a jó közérzet és az egészséges élet kulcsa volt.</p>
-    <p>Célom, hogy másokat is segítsek a fejlődésükben, legyen szó izmosodásól, fogyásról vagy formálódásról.</p>
+    <p>Ritmikus gimnasztika és kajak múlt, a mozgás szeretete.</p>
+    <p>Célom: segíteni másokat izmosodásban, fogyásban, formálódásban.</p>
   </header>
 </section>
 
 <!-- Frissítés -->
 <section id="frissites">
   <h2>💥 FRISSÍTÉS indul!</h2>
-  <p>Legyen szó fogyásról, tömegelésről vagy formálódásról – nem sablonos megoldásokat kapsz, hanem valódi támogatást!</p>
-
+  <p>Személyre szabott edzések, motiváció, fejlődéskövetés!</p>
+  <!-- példákhoz csak 1 toggle hagyok -->
   <div class="detail-item">
     <div class="header">
       <span>Személyre szabott edzéstervek</span>
       <button class="toggle-btn"><span class="label">Részletek</span> <span class="arrow">▼</span></button>
     </div>
     <div class="content">
-      <p>Részletes edzéstervek, figyelembe véve a testalkatodat, erőnlétedet és céljaidat. Biztonságos, hatékony fejlődés.</p>
-    </div>
-  </div>
-
-  <div class="detail-item">
-    <div class="header">
-      <span>Motiváció és támogatás</span>
-      <button class="toggle-btn"><span class="label">Részletek</span> <span class="arrow">▼</span></button>
-    </div>
-    <div class="content">
-      <p>Folyamatos visszajelzéssel és támogatással motiválok, hogy ne maradj egyedül az út során.</p>
-    </div>
-  </div>
-
-  <div class="detail-item">
-    <div class="header">
-      <span>Rugalmas időbeosztás</span>
-      <button class="toggle-btn"><span class="label">Részletek</span> <span class="arrow">▼</span></button>
-    </div>
-    <div class="content">
-      <p>Edzhetsz, amikor neked jó, online programmal bármikor hozzáférhetsz a gyakorlatokhoz.</p>
-    </div>
-  </div>
-
-  <div class="detail-item">
-    <div class="header">
-      <span>Online bárhonnan</span>
-      <button class="toggle-btn"><span class="label">Részletek</span> <span class="arrow">▼</span></button>
-    </div>
-    <div class="content">
-      <p>Bármely eszközről és helyszínről hozzáférhetsz az edzéstervekhez, legyen az otthon, edzőterem vagy nyaralás közben.</p>
-    </div>
-  </div>
-
-  <div class="detail-item">
-    <div class="header">
-      <span>Útmutatás a helyes végrehajtáshoz</span>
-      <button class="toggle-btn"><span class="label">Részletek</span> <span class="arrow">▼</span></button>
-    </div>
-    <div class="content">
-      <p>Videós és szöveges instrukciókkal biztosítom, hogy minden gyakorlatot helyesen és biztonságosan végezz.</p>
-    </div>
-  </div>
-
-  <div class="detail-item">
-    <div class="header">
-      <span>Folyamatos fejlődéskövetés</span>
-      <button class="toggle-btn"><span class="label">Részletek</span> <span class="arrow">▼</span></button>
-    </div>
-    <div class="content">
-      <p>Minden edzés után nyomon követjük az előrehaladásodat, és szükség esetén módosítjuk a tervet a folyamatos fejlődés érdekében.</p>
+      <p>Részletes edzésterv a testalkatod és céljaid alapján.</p>
     </div>
   </div>
 </section>
 
 <!-- Szolgáltatások -->
 <section id="services">
-  <h2 style="text-align:center; margin-bottom:20px;">Jelentkezéshez kattints a neked megfelelőre:</h2>
-
+  <h2>Jelentkezéshez kattints a neked megfelelőre:</h2>
   <div class="services">
     <a class="service-card" href="https://docs.google.com/forms/d/e/1FAIpQLScgwTixY1wgfXy_hj8OL48Wjr4YhH7DkAYGIeRkgVLWU0fZcw/viewform?usp=header" target="_blank">
       <h3>Online 2x/hét</h3>
-      <p>Havi díj: 16 000 Ft</p>
-      <p class="small-text">(2 000 Ft/edzés)</p>
+      <p>16 000 Ft</p>
+      <p class="small-text">(2000 Ft/edzés)</p>
     </a>
-
     <a class="service-card" href="https://docs.google.com/forms/d/e/1FAIpQLScgwTixY1wgfXy_hj8OL48Wjr4YhH7DkAYGIeRkgVLWU0fZcw/viewform?usp=header" target="_blank">
       <h3>Online 3x/hét</h3>
-      <p>Havi díj: 24 000 Ft</p>
-      <p class="small-text">(2 000 Ft/edzés)</p>
-    </a>
-
-    <a class="service-card" href="https://docs.google.com/forms/d/e/1FAIpQLScgwTixY1wgfXy_hj8OL48Wjr4YhH7DkAYGIeRkgVLWU0fZcw/viewform?usp=header" target="_blank">
-      <h3>Online 4x/hét</h3>
-      <p>Havi díj: 28 800 Ft</p>
-      <p class="small-text">(1 800 Ft/edzés)</p>
-    </a>
-
-    <a class="service-card" href="https://docs.google.com/forms/d/e/1FAIpQLScgwTixY1wgfXy_hj8OL48Wjr4YhH7DkAYGIeRkgVLWU0fZcw/viewform?usp=header" target="_blank">
-      <h3>Online 5x/hét</h3>
-      <p>Havi díj: 34 000 Ft</p>
-      <p class="small-text">(1 700 Ft/edzés)</p>
-    </a>
-
-    <a class="service-card" href="mailto:ittlilike@gmail.com">
-      <h3>Személyes edzés</h3>
-      <p>Érdeklődés e-mailben</p>
+      <p>24 000 Ft</p>
+      <p class="small-text">(2000 Ft/edzés)</p>
     </a>
   </div>
 </section>
@@ -311,47 +287,35 @@ html {
 <!-- Kedvezmények -->
 <section id="discounts">
   <h2>Kedvezmények</h2>
-  <table class="discount-table">
-    <thead>
-      <tr>
-        <th>Edzéstervek száma/hét</th>
-        <th>Hónapban összes edzés</th>
-        <th>Alap ár (Ft)</th>
-        <th>Kedvezmény (%)</th>
-        <th>Kedvezményes ár (Ft)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>4 napos</td>
-        <td class="small-text">16</td>
-        <td>32 000</td>
-        <td class="small-text">10%</td>
-        <td class="discount-price">28 800</td>
-      </tr>
-      <tr>
-        <td>5 napos</td>
-        <td class="small-text">20</td>
-        <td>40 000</td>
-        <td class="small-text">15%</td>
-        <td class="discount-price">34 000</td>
-      </tr>
-      <tr>
-        <td>8 hetes csomag (3 nap/hét)</td>
-        <td class="small-text">24</td>
-        <td>48 000</td>
-        <td class="small-text">15%</td>
-        <td class="discount-price">40 800</td>
-      </tr>
-      <tr>
-        <td>12 hetes csomag (3 nap/hét)</td>
-        <td class="small-text">36</td>
-        <td>72 000</td>
-        <td class="small-text">20%</td>
-        <td class="discount-price">57 600</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="discount-table-container">
+    <table class="discount-table">
+      <thead>
+        <tr>
+          <th>Heti edzés</th>
+          <th>Havi összes</th>
+          <th>Alap ár</th>
+          <th>Kedv. %</th>
+          <th>Kedvezményes ár</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>4x</td>
+          <td>16</td>
+          <td>32 000</td>
+          <td>10%</td>
+          <td><strong>28 800</strong></td>
+        </tr>
+        <tr>
+          <td>5x</td>
+          <td>20</td>
+          <td>40 000</td>
+          <td>15%</td>
+          <td><strong>34 000</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <!-- Kapcsolat -->
@@ -366,13 +330,17 @@ html {
   <p>© 2025 Ittzés Lili - Sportoktató</p>
 </footer>
 
-<!-- Toggle Script -->
 <script>
+// Hamburger menü JS
+document.querySelector(".hamburger").addEventListener("click",()=>{
+  document.querySelector(".menu").classList.toggle("show");
+});
+
+// Toggle részletek
 document.querySelectorAll('.toggle-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const parent = btn.closest('.detail-item');
     parent.classList.toggle('open');
-
     const label = btn.querySelector('.label');
     const arrow = btn.querySelector('.arrow');
     if(parent.classList.contains('open')){
