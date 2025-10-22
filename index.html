@@ -309,12 +309,18 @@
 	}
 	
 	.mobile-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.35);
-  backdrop-filter: blur(1px);
-  display: none; z-index: 90;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(3px);
+  display: none;
+  z-index: 50; /* a menü alatt marad */
 }
-.mobile-overlay.active { display: block; }
+
+.mobile-overlay.active {
+  display: block;
+}
+
 
 </style>
 
@@ -872,3 +878,4 @@
 
 		</body> 
 	</html>
+
