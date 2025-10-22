@@ -307,12 +307,22 @@
 	html {
 	scroll-behavior: smooth;
 	}
+	
+	.mobile-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(1px);
+  display: none; z-index: 90;
+}
+.mobile-overlay.active { display: block; }
+
 </style>
 
 </head> 
 	<body> 
 	<!-- Menü --> 	
 		<nav> 
+		<div id="mobile-overlay" class="mobile-overlay"></div>
 		<div class="hamburger" id="hamburger"> 
 		<div>
 		</div> 
@@ -773,60 +783,77 @@
 		</footer> 
 		<!-- Toggle Script --> 
 			<script>
-document.querySelectorAll('.toggle-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const parent = btn.closest('.detail-item');
-    parent.classList.toggle('open');
+				document.addEventListener('DOMContentLoaded', () => {
+				  // --- Lenyitható dobozok ---
+				  document.querySelectorAll('.toggle-btn').forEach(btn => {
+					btn.addEventListener('click', () => {
+					  const parent = btn.closest('.detail-item');
+					  parent.classList.toggle('open');
+					  const label = btn.querySelector('.label');
+					  const arrow = btn.querySelector('.arrow');
+					  if (parent.classList.contains('open')) {
+						if (label) label.textContent = 'Bezárás';
+						if (arrow) arrow.textContent = '▲';
+					  } else {
+						if (label) label.textContent = 'Részletek';
+						if (arrow) arrow.textContent = '▼';
+					  }
+					});
+				  });
 
-    const label = btn.querySelector('.label');
-    const arrow = btn.querySelector('.arrow');
+				  // --- Hamburger menü ---
+				  const hamburger = document.getElementById('hamburger');
+				  const navLinks  = document.getElementById('nav-links');
+				  const overlay   = document.getElementById('mobile-overlay');
 
-    if (parent.classList.contains('open')) {
-      label.textContent = 'Bezárás';
-      arrow.textContent = '▲';
-    } else {
-      label.textContent = 'Részletek';
-      arrow.textContent = '▼';
-    }
-  });
-});
+				  if (!hamburger || !navLinks || !overlay) return;
 
-// --- Hamburger menü logika ---
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('nav-links');
+				  function openMenu() {
+					navLinks.classList.add('active');
+					hamburger.classList.add('active');
+					overlay.classList.add('active');
+				  }
+				  function closeMenu() {
+					navLinks.classList.remove('active');
+					hamburger.classList.remove('active');
+					overlay.classList.remove('active');
+				  }
+				  function isMenuOpen() {
+					return navLinks.classList.contains('active');
+				  }
 
-// Menü nyit/zár gombbal
-hamburger.addEventListener('click', (e) => {
-  e.stopPropagation(); // ne záródjon be azonnal
-  navLinks.classList.toggle('active');
-  hamburger.classList.toggle('active');
-});
+				  // Nyit/zár gombbal
+				  hamburger.addEventListener('click', (e) => {
+					e.stopPropagation();
+					isMenuOpen() ? closeMenu() : openMenu();
+				  });
 
-// Menü linkre kattintáskor záródjon
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('active');
-    hamburger.classList.remove('active');
-  });
-});
+				  // Linkre kattintás -> zárás
+				  navLinks.querySelectorAll('a').forEach(a => {
+					a.addEventListener('click', () => closeMenu());
+				  });
 
-// Ha a menün kívül kattintanak, záródjon
-document.addEventListener('click', (e) => {
-  const clickedInside = navLinks.contains(e.target) || hamburger.contains(e.target);
-  if (!clickedInside) {
-    navLinks.classList.remove('active');
-    hamburger.classList.remove('active');
-  }
-});
+				  // Overlay-re kattintás -> zárás
+				  overlay.addEventListener('click', () => closeMenu());
 
-// ESC gombbal is zárható
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    navLinks.classList.remove('active');
-    hamburger.classList.remove('active');
-  }
-});
-</script>
+				  // Menün kívüli kattintás -> zárás (biztonsági)
+				  document.addEventListener('click', (e) => {
+					if (!isMenuOpen()) return;
+					const clickedInside = navLinks.contains(e.target) || hamburger.contains(e.target);
+					if (!clickedInside) closeMenu();
+				  });
+
+				  // ESC -> zárás
+				  document.addEventListener('keydown', (e) => {
+					if (e.key === 'Escape' && isMenuOpen()) closeMenu();
+				  });
+
+				  // Átméretezés/orientációváltás esetén állapot tisztítás
+				  window.addEventListener('resize', closeMenu);
+				  window.addEventListener('orientationchange', closeMenu);
+				});
+			</script>
+
 
 			<script>
 			// oldal betöltésekor minden detail-item zárva indul
